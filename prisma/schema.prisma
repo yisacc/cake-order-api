@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+}
+
+model Order {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  cakeShapeId String
+  cakeShape   CakeShape @relation(fields: [cakeShapeId], references: [id])
+  cakeSizeId  String
+  cakeSize    CakeSize  @relation(fields: [cakeSizeId], references: [id])
+  toppings    Topping[]
+  message     String?   @db.VarChar(20)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model CakeShape {
+  id     String  @id @default(uuid())
+  shape  String
+  price  Float
+  orders Order[]
+}
+
+model CakeSize {
+  id     String  @id @default(uuid())
+  size   String
+  price  Float
+  orders Order[]
+}
+
+model Topping {
+  id       String  @id @default(uuid())
+  type     String
+  price    Float
+  quantity Int
+  orders   Order[]
+}
