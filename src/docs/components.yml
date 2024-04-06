@@ -12,6 +12,38 @@ components:
         id: 5ebac534954b54139806c112
         email: fake@example.com
 
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        cakeShapeId:
+          type: string
+        cakeSizeId:
+          type: string
+        toppings:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+
+    CakeShape:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: number 
+      example:
+        id: 5ebac534954b54139806c112
+        name: Round
+        price: 0.5
+
     Token:
       type: object
       properties:
@@ -39,6 +71,7 @@ components:
           type: number
         message:
           type: string
+
 
   responses:
     DuplicateEmail:

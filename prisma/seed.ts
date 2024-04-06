@@ -17,24 +17,24 @@ async function main() {
   const topping1 = await prisma.topping.create({
     data: {
       type: 'Fresh Strawberries',
-      price: 2,
-      quantity: 4,
+      price: 0.5,
+      quantity: 1,
     },
   });
 
   const topping2 = await prisma.topping.create({
     data: {
       type: 'White Chocolate',
-      price: 3,
-      quantity: 4,
+      price: 0.75,
+      quantity: 1,
     },
   });
 
   const topping3 = await prisma.topping.create({
     data: {
       type: 'Dark Chocolate',
-      price: 2.5,
-      quantity: 4,
+      price: 0.625,
+      quantity: 1,
     },
   });
   const cakeShape1 = await prisma.cakeShape.create({

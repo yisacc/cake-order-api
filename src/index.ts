@@ -12,9 +12,6 @@ prisma.$connect()
       logger.info(`Listening to port ${config.port}`);
     })
   })
-  .catch((error) => {
-    logger.error('Error connecting to SQL Database:', error);
-  });
 
 const exitHandler = () => {
   if (server) {

@@ -50,14 +50,14 @@ model Order {
 
 model CakeShape {
   id     String  @id @default(uuid())
-  shape  String
+  shape  String @unique
   price  Float
   orders Order[]
 }
 
 model CakeSize {
   id     String  @id @default(uuid())
-  size   String
+  size   String @unique
   price  Float
   orders Order[]
 }

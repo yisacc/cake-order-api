@@ -2,6 +2,8 @@ import express from 'express';
 import authRoute from './auth.route';
 import docsRoute from './docs.route';
 import config from '../../config/config';
+import orderRoute from './order.route';
+import cakeShapeRoute from './cakeShape.route';
 
 const router = express.Router();
 
@@ -9,6 +11,14 @@ const defaultRoutes = [
   {
     path: '/auth',
     route: authRoute
+  },
+  {
+    path: '/orders',
+    route: orderRoute
+  },
+  {
+    path: '/cake-shapes',
+    route: cakeShapeRoute
   }
 ];
 
