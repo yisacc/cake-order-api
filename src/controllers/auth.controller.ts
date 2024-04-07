@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import { authService, userService, tokenService } from '../services';
 import catchAsync from '../utils/catchAsync';
 import exclude from '../utils/exclude';
+import { User } from '@prisma/client';
 
 const register = catchAsync(async (req, res) => {
   const { email, password } = req.body;
@@ -29,9 +30,19 @@ const refreshTokens = catchAsync(async (req, res) => {
 });
 
 
+const getMe = catchAsync(async (req, res,) => {
+  const user = req.user as User;
+  const dbUser = await userService.getMe(user.id);
+  if (!dbUser) {
+    return res.status(404).send('User not found');
+  }
+  res.send(user);
+});
+
 export default {
   register,
   login,
   logout,
-  refreshTokens
+  refreshTokens,
+  getMe
 };

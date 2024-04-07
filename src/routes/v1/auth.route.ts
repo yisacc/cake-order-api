@@ -2,6 +2,7 @@ import express from 'express';
 import validate from '../../middlewares/validate';
 import authValidation from '../../validations/auth.validation';
 import authController from '../../controllers/auth.controller';
+import auth from '../../middlewares/auth';
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.post(
   validate(authValidation.refreshTokens),
   authController.refreshTokens
 );
+router.get('/me', auth(), authController.getMe);
 
 export default router;
 
@@ -170,4 +172,21 @@ export default router;
  *               $ref: '#/components/schemas/AuthTokens'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
+ */
+
+/**
+ * @swagger
+ * /me:
+ *   get:
+ *     summary: Get the current user
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: The user data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  */

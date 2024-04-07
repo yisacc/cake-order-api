@@ -11,7 +11,6 @@ const placeOrder = catchAsync(async (req, res) => {
 });
 
 const getOrders = catchAsync(async (req: Request, res: Response) => {
-  console.log(req.user)
   const user = req.user as User;
   const orders = await orderService.getOrders(user.id);
   res.send({ orders });

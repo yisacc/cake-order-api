@@ -46,7 +46,12 @@ const getUserByEmail = async <Key extends keyof User>(
   }) as Promise<Pick<User, Key> | null>;
 };
 
+const getMe = async (userId: string): Promise<User | null> => {
+  return prisma.user.findUnique({ where: { id: userId } });
+}
+
 export default {
   createUser,
   getUserByEmail,
+  getMe
 };
