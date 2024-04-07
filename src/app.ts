@@ -35,13 +35,17 @@ app.use(xss());
 // gzip compression
 app.use(compression());
 
+
+
+
 // enable cors
-app.use(cors());
-app.options('*', cors(
+app.use(cors(
   {
-    origin: 'http://localhost:5173'
+    origin: config.cors.origin,
+    credentials: true,
   }
 ));
+app.options('*', cors());
 
 // jwt authentication
 app.use(passport.initialize());
