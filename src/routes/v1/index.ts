@@ -4,6 +4,8 @@ import docsRoute from './docs.route';
 import config from '../../config/config';
 import orderRoute from './order.route';
 import cakeShapeRoute from './cakeShape.route';
+import cakeSizeRoute from './cakeSize.route';
+import toppingRoute from './toppings.route';
 
 const router = express.Router();
 
@@ -19,6 +21,14 @@ const defaultRoutes = [
   {
     path: '/cake-shapes',
     route: cakeShapeRoute
+  },
+  {
+    path: '/cake-sizes',
+    route: cakeSizeRoute
+  },
+  {
+    path: '/toppings',
+    route: toppingRoute
   }
 ];
 

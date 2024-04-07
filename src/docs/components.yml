@@ -43,6 +43,35 @@ components:
         id: 5ebac534954b54139806c112
         name: Round
         price: 0.5
+    CakeSize:
+      type: object
+      properties:
+        id:
+          type: string
+        size:
+          type: string
+        price:
+          type: number 
+      example:
+        id: 5ebac534954b54139806c112
+        size: Small
+        price: 0.5
+    Topping:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        quantity:
+          type: number
+        price:
+          type: number 
+      example:
+        id: 5ebac534954b54139806c112
+        type: Sprinkles
+        quantity: 1
+        price: 0.5    
 
     Token:
       type: object
