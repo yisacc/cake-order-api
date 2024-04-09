@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Router } from 'express';
 import authRoute from './auth.route';
 import docsRoute from './docs.route';
 import config from '../../config/config';
@@ -29,15 +29,16 @@ const defaultRoutes = [
   {
     path: '/toppings',
     route: toppingRoute
-  }
-];
-
-const devRoutes = [
-  // routes available only in development mode
+  },
   {
     path: '/docs',
     route: docsRoute
   }
+];
+
+const devRoutes: { path: string, route: Router }[] = [
+  // routes available only in development mode
+  // this is where i would be putting the docs route if it wasn't for exam
 ];
 
 defaultRoutes.forEach((route) => {
