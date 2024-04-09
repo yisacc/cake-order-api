@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "yarn build && pm2 start ecosystem.config.json --no-daemon",
+    "start": "yarn build && cross-env NODE_ENV=production node build/src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon src/index.ts",
     "build": "rimraf build && tsc -p tsconfig.json"
   },
@@ -49,6 +49,8 @@
     "nodemon": "^3.1.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
+    "pm2": "^5.3.1",
+    "rimraf": "^5.0.5",
     "winston": "^3.13.0",
     "xss-filters": "^1.2.7"
   }
