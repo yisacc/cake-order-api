@@ -17,8 +17,6 @@ components:
       properties:
         id:
           type: string
-        userId:
-          type: string
         cakeShapeId:
           type: string
         cakeSizeId:
@@ -29,6 +27,11 @@ components:
             type: string
         message:
           type: string
+      required:
+        - id
+        - userId
+        - cakeShapeId
+        - cakeSizeId
 
     CakeShape:
       type: object

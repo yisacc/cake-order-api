@@ -37,6 +37,7 @@ const loginUserWithEmailAndPassword = async (
  * @returns {Promise<void>}
  */
 const logout = async (refreshToken: string): Promise<void> => {
+  console.log("refreshToken", refreshToken)
   const refreshTokenData = await prisma.token.findFirst({
     where: {
       token: refreshToken,
@@ -56,13 +57,14 @@ const logout = async (refreshToken: string): Promise<void> => {
  * @returns {Promise<AuthTokensResponse>}
  */
 const refreshAuth = async (refreshToken: string): Promise<AuthTokensResponse> => {
+  console.log("refreshToken", refreshToken)
   try {
     const refreshTokenData = await tokenService.verifyToken(refreshToken, TokenType.REFRESH);
     const { userId } = refreshTokenData;
     await prisma.token.delete({ where: { id: refreshTokenData.id } });
     return tokenService.generateAuthTokens({ id: userId });
   } catch (error) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate');
+    throw new ApiError(httpStatus.NOT_FOUND, 'Not found');
   }
 };
 

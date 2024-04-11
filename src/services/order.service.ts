@@ -1,20 +1,28 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Topping } from '@prisma/client';
 import ApiError from '../utils/ApiError';
 import httpStatus from 'http-status';
 
 const prisma = new PrismaClient();
 
 const createOrder = async (userId: string, cakeShapeId: string, cakeSizeId: string, toppingIds: string[], message: string) => {
+  let data: any = {
+    userId,
+    cakeShapeId,
+    cakeSizeId,
+  };
+
+  if (message) {
+    data.message = message;
+  }
+
+  if (toppingIds && toppingIds.length > 0) {
+    data.toppings = {
+      connect: toppingIds.map(id => ({ id })),
+    };
+  }
+
   return await prisma.order.create({
-    data: {
-      userId,
-      cakeShapeId,
-      cakeSizeId,
-      message,
-      toppings: {
-        connect: toppingIds.map(id => ({ id })),
-      },
-    },
+    data,
   });
 }
 
@@ -65,7 +73,13 @@ const deleteOrder = async (id: string) => {
 const calculatePrice = async (cakeShapeId: string, cakeSizeId: string, toppingIds: string[], message: string): Promise<number> => {
   const cakeShape = await prisma.cakeShape.findUnique({ where: { id: cakeShapeId } });
   const cakeSize = await prisma.cakeSize.findUnique({ where: { id: cakeSizeId } });
-  const toppings = await prisma.topping.findMany({ where: { id: { in: toppingIds } } });
+  const uniqueToppingIds = [...new Set(toppingIds)];
+  let toppingsPrice: Topping[] = [];
+  for (const id of uniqueToppingIds) {
+    const count = toppingIds.filter(toppingId => toppingId === id).length;
+    const topping = await prisma.topping.findUnique({ where: { id } });
+    toppingsPrice = [...toppingsPrice, ...Array(count).fill(topping)];
+  }
   if (!cakeShape || !cakeSize) {
     throw new Error('Cake shape or size not found');
   }
@@ -75,7 +89,7 @@ const calculatePrice = async (cakeShapeId: string, cakeSizeId: string, toppingId
 
   price += cakeSize.price;
 
-  toppings.forEach((topping) => {
+  toppingsPrice.forEach((topping) => {
     price += topping.price;
   });
 

@@ -5,8 +5,9 @@ import { Request, Response } from 'express';
 import { User } from '@prisma/client';
 
 const placeOrder = catchAsync(async (req, res) => {
-  const { userId, cakeShapeId, cakeSizeId, toppingIds, message } = req.body;
-  const order = await orderService.createOrder(userId, cakeShapeId, cakeSizeId, toppingIds, message);
+  const user = req.user as User;
+  const { cakeShapeId, cakeSizeId, toppingIds, message } = req.body;
+  const order = await orderService.createOrder(user.id, cakeShapeId, cakeSizeId, toppingIds, message);
   res.status(httpStatus.CREATED).send({ order });
 });
 
@@ -34,6 +35,7 @@ const deleteOrder = catchAsync(async (req, res) => {
 
 const calculatePrice = catchAsync(async (req, res) => {
   const { cakeShapeId, cakeSizeId, toppingIds, message } = req.body;
+  console.log(cakeShapeId, cakeSizeId, toppingIds, message);
   const price = await orderService.calculatePrice(cakeShapeId, cakeSizeId, toppingIds, message);
   res.send({ price });
 });

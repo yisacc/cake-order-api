@@ -4,8 +4,8 @@ const placeOrder = {
   body: Joi.object().keys({
     cakeShapeId: Joi.string().required(),
     cakeSizeId: Joi.string().required(),
-    toppingIds: Joi.array().items(Joi.string()).required(),
-    message: Joi.string().max(20),
+    toppingIds: Joi.array().min(0).items(Joi.string()),
+    message: Joi.string().allow('').max(20),
   }),
 };
 
